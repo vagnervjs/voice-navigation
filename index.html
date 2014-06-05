@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Navigation</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="src/css/main.css">
+    <!-- Importing Web Component's Polyfill -->
+    <script src="src/bower_components/platform/platform.js"></script>
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="src/bower_components/voice-elements/dist/voice-recognition.html">
+</head>
+<body>
+    <voice-recognition id="recognition-element"></voice-recognition>
+
+    <div class="map" id="map"></div>
+    <div class="map" id="street-view"></div>
+
+    <input type="text" id="search" placeholder="Search">
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <!-- App Scripts -->
+    <script src="src/js/main.js"></script>
+    <script src="src/js/voice.js"></script>
+    <script src="src/js/location.js"></script>
+    <script src="src/js/maps.js"></script>
+    <script src="src/js/search.js"></script>
+</body>
+</html>

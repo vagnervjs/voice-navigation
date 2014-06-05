@@ -1,0 +1,40 @@
+{
+  "name": "voice-elements",
+  "version": "0.1.2",
+  "description": "Web Speech API wrapper that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using Polymer.",
+  "authors": [
+    "Zeno Rocha <hi@zenorocha.com>"
+  ],
+  "license": "MIT",
+  "main": "dist/voice-player.html",
+  "keywords": [
+    "polymer",
+    "speech",
+    "speech-synthesis",
+    "voice",
+    "voice-player",
+    "voice-recognition",
+    "web-speech",
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "platform": "Polymer/platform#~0.2.3",
+    "polymer": "Polymer/polymer#~0.2.3"
+  },
+  "homepage": "https://github.com/zenorocha/voice-elements",
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.2",
+    "commit": "8421a03b5796430c16181630d5c7378dd825127c"
+  },
+  "_source": "git://github.com/zenorocha/voice-elements.git",
+  "_target": "~0.1.2",
+  "_originalSource": "voice-elements",
+  "_direct": true
+}
