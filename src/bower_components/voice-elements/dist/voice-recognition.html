@@ -2,23 +2,18 @@
 <link rel="import" href="../../polymer/polymer.html">
 
 <!-- Define your custom element -->
-<polymer-element name="voice-recognition" attributes="continuous text">
+<polymer-element name="voice-recognition" attributes="continuous accent text">
     <script>
         Polymer('voice-recognition', {
             /* -- Attributes ------------------------------------------------ */
             continuous: true,
+            accent: 'en-US',
             text: '',
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
-                var SpeechRecognition = window.SpeechRecognition ||
-                                        window.webkitSpeechRecognition ||
-                                        window.mozSpeechRecognition ||
-                                        window.msSpeechRecognition ||
-                                        window.oSpeechRecognition;
-
-                if (SpeechRecognition !== undefined) {
-                    this.recognition = new SpeechRecognition();
+                if ('webkitSpeechRecognition' in window) {
+                    this.recognition = new webkitSpeechRecognition();
                 }
                 else {
                     console.error('Your browser do not support the Web Speech API');
@@ -27,12 +22,16 @@
             ready: function() {
                 this.recognition.continuous = this.continuous;
                 this.recognition.interimResults = false;
+                this.accentChanged();
 
                 // Initialize event listeners
                 this.bindStart();
                 this.bindError();
                 this.bindEnd();
                 this.bindResult();
+            },
+            accentChanged: function() {
+                this.recognition.lang = this.accent;
             },
 
             /* -- Methods --------------------------------------------------- */

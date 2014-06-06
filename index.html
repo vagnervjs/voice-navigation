@@ -12,20 +12,26 @@
     <link rel="import" href="src/bower_components/voice-elements/dist/voice-recognition.html">
 </head>
 <body>
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
     <voice-recognition id="recognition-element"></voice-recognition>
 
     <div class="map" id="map"></div>
     <div class="map" id="street-view"></div>
 
     <input type="text" id="search" placeholder="Search">
+    <div id="log"></div>
 
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <!-- App Scripts -->
-    <script src="src/js/main.js"></script>
+
+    <!-- App Modules -->
     <script src="src/js/voice.js"></script>
-    <script src="src/js/location.js"></script>
     <script src="src/js/maps.js"></script>
+    <!-- App Scripts -->
+    <script src="src/js/location.js"></script>
     <script src="src/js/search.js"></script>
+    <script src="src/js/main.js"></script>
 </body>
 </html>
