@@ -6,6 +6,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="src/css/main.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     <!-- Importing Web Component's Polyfill -->
     <script src="src/bower_components/platform/platform.js"></script>
     <!-- Importing Custom Elements -->
@@ -15,17 +16,60 @@
     <div id="loading">
         <div class="loader"></div>
     </div>
+
+    <!-- Voice Element -->
     <voice-recognition id="recognition-element"></voice-recognition>
 
-    <div class="map" id="map"></div>
-    <div class="map" id="street-view"></div>
+    <!-- Maps -->
+    <div id="map" class="card"></div>
+    <div id="street-view"></div>
 
+    <!-- Search -->
     <input type="text" id="search" placeholder="Search">
-    <div id="log"></div>
+
+    <!-- Help -->
+    <div id="help" class="card">
+        <h2>Instructions</h2>
+        <div>
+            <p>Keyboard ShortCuts</p>
+            <ul>
+                <li>S: Start voice recognation</li>
+                <li>E: End voice recognation</li>
+                <li>↑: Up</li>
+                <li>←: Rotate Left</li>
+                <li>→: Rotate Right</li>
+                <li>↓: Down</li>
+                <li>H: Left</li>
+                <li>J: Right</li>
+                <li>N: Heading Up</li>
+                <li>M: Heading Down</li>
+            </ul>
+        </div>
+        <div>
+            <p>Voice Commands</p>
+            <ul>
+                <li>GO</li>
+                <li>Back</li>
+                <li>Left</li>
+                <li>Right</li>
+                <li>Rotate</li>
+                <li>UP</li>
+                <li>Down</li>
+            </ul>
+        </div>
+
+        <iframe class="gh-btn" id="gh-star" src="http://ghbtns.com/github-btn.html?user=vagnervjs&repo=voice-navigation&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
+        <iframe class="gh-btn" id="gh-fork" src="http://ghbtns.com/github-btn.html?user=vagnervjs&repo=voice-navigation&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
+    </div>
+
+    <!-- Log -->
+    <div id="log" class="card">
+        <h3>Voice Log</h3>
+    </div>
+
 
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
     <!-- App Modules -->
     <script src="src/js/voice.js"></script>
     <script src="src/js/maps.js"></script>
@@ -33,5 +77,18 @@
     <script src="src/js/location.js"></script>
     <script src="src/js/search.js"></script>
     <script src="src/js/main.js"></script>
+
+    <!-- GA -->
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-32909284-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
 </body>
 </html>
