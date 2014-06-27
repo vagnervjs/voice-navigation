@@ -5,10 +5,10 @@ Navigate in Google Maps using voice (or keyboard, ok).
 This is a experiment using Web Speech API via [<voice-elements>](https://github.com/zenorocha/voice-elements) that allows user navigate in the map just using voice.
 
 ##Demo
-![image](http://f.cl.ly/items/3j070Y373B071M3K1b0J/Screen%20Shot%202014-06-06%20at%2002.04.23.png)
+![image](http://f.cl.ly/items/2G2E031j2P1e3o3g3U0X/Screen%20Shot%202014-06-27%20at%2000.55.18.png)
 
 ##Live Demo:
-[http://vagnervjs.github.io/voice-navigation](http://vagnervjs.github.io/voice-navigation)
+[https://vagnervjs.github.io/voice-navigation/](https://vagnervjs.github.io/voice-navigation/)
 
 ##Voice Commands:
 - GO
