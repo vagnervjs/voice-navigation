@@ -17,7 +17,7 @@ body {
     background: #2980b9;
 }
 
-#loading {
+.loading {
     width: 100px;
     height: 100px;
     position: absolute;
@@ -25,6 +25,11 @@ body {
     left: 50%;
     margin-top: -100px;
     margin-left: -100px;
+}
+
+.brower-support {
+    text-align: center;
+    display: none;
 }
 
 #street-view {
@@ -45,7 +50,7 @@ body {
     height: 30px;
     border: solid 1px #e2e2e2;
     position: absolute;
-    top: 30px;
+    top: 50px;
     right: 30px;
     padding: 0 10px;
     font-size: 20px;
@@ -58,7 +63,7 @@ body {
 }
 
 #help {
-    top: 80px;
+    top: 94px;
     right: 30px;
     width: 35%;
 }
