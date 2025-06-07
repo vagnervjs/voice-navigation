@@ -23,10 +23,10 @@ class VoiceNavigationApp {
 
     try {
       log('🚀 Starting Voice Navigation App...', 'SYSTEM');
-      
+
       await this._loadGoogleMapsAPI();
       this._initializeModules();
-      
+
       this.isInitialized = true;
       log('🎉 Voice Navigation App ready!', 'SYSTEM');
     } catch (error) {
@@ -38,29 +38,29 @@ class VoiceNavigationApp {
 
   async _loadGoogleMapsAPI() {
     log('📦 Loading Google Maps API...', 'SYSTEM');
-    
+
     await this.loader.load();
-    
+
     // Load required libraries
     const libraries = CONFIG.API.GOOGLE_MAPS.LIBRARIES;
     await Promise.all(
       libraries.map(library => google.maps.importLibrary(library))
     );
-    
+
     log('✅ Google Maps API loaded successfully', 'SYSTEM');
   }
 
   _initializeModules() {
     log('🔧 Initializing modules...', 'SYSTEM');
-    
+
     // Initialize log system first (to set up filters)
     initializeLog();
-    
+
     // Initialize modules in dependency order
     const results = {
       location: locationController.init(),
       search: searchController.init(),
-      voice: voiceNavigation.init()
+      voice: voiceNavigation.init(),
     };
 
     // Log any module initialization failures

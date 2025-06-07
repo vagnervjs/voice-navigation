@@ -29,20 +29,20 @@ class MapsController {
   }
 
   _createMapInstances(lat, lng) {
-    const mapContainer = document.querySelector("#map");
-    const streetViewContainer = document.querySelector("#street-view");
-    
+    const mapContainer = document.querySelector('#map');
+    const streetViewContainer = document.querySelector('#street-view');
+
     if (!mapContainer || !streetViewContainer) {
       throw new Error('Map containers not found');
     }
 
     const position = new google.maps.LatLng(lat, lng);
-    
+
     const map = new google.maps.Map(mapContainer, {
       zoom: CONFIG.MAPS.DEFAULT_ZOOM,
       center: position,
     });
-    
+
     const streetView = new google.maps.StreetViewPanorama(streetViewContainer, {
       position,
       pov: this.viewDirection,
@@ -53,19 +53,19 @@ class MapsController {
 
   updatePosition() {
     if (!this.googleMapsInstances || !this.mapData) return;
-    
+
     const newPosition = new google.maps.LatLng(
       this.mapData.lat,
       this.mapData.lng
     );
-    
+
     this.googleMapsInstances.map.panTo(newPosition);
     this.googleMapsInstances.streetView.setPosition(newPosition);
   }
 
   updateViewDirection() {
     if (!this.googleMapsInstances) return;
-    
+
     const currentPov = this.googleMapsInstances.streetView.getPov();
     currentPov.heading = this.viewDirection.heading;
     currentPov.pitch = this.viewDirection.pitch;
@@ -74,7 +74,7 @@ class MapsController {
 
   executeVoiceCommand(command, multiplier = 1) {
     if (!this.mapData) return;
-    
+
     const moveDistance = this.mapData.positionRate * multiplier;
     const turnAngle = this.mapData.povRate * multiplier;
 
@@ -116,7 +116,7 @@ class MapsController {
         this.mapData.lng -= moveDistance;
         break;
     }
-    
+
     this.updatePosition();
     this.updateViewDirection();
   }
@@ -133,14 +133,18 @@ class MapsController {
   }
 
   _adjustPitch(angle) {
-    this.viewDirection.pitch = Math.max(-90, Math.min(90, this.viewDirection.pitch + angle));
+    this.viewDirection.pitch = Math.max(
+      -90,
+      Math.min(90, this.viewDirection.pitch + angle)
+    );
     this.mapData.pov.pitch = this.viewDirection.pitch;
   }
 
   handleKeyboardInput(keyCode, multiplier = 1) {
     if (!this.mapData) return;
-    
-    const { ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, H, J, N, M } = CONFIG.KEYBOARD_CODES;
+
+    const { ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, H, J, N, M } =
+      CONFIG.KEYBOARD_CODES;
     const positionRate = this.mapData.positionRate * multiplier;
     const povRate = this.mapData.povRate * multiplier;
 
@@ -170,13 +174,13 @@ class MapsController {
         this.mapData.pov.pitch -= povRate;
         break;
     }
-    
+
     this.updatePosition();
     this.updateViewDirection();
   }
 
   _setupKeyboardListeners() {
-    document.body.addEventListener("keydown", (e) => {
+    document.body.addEventListener('keydown', e => {
       if (isFormInput(e.target)) return;
       this.handleKeyboardInput(e.keyCode);
     });

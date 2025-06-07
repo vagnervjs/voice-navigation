@@ -10,8 +10,9 @@ class VoiceNavigation {
   }
 
   init() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
     if (!SpeechRecognition) {
       log('❌ Web Speech API is not supported in this browser', 'ERROR');
       return false;
@@ -20,20 +21,23 @@ class VoiceNavigation {
     this.speechRecognition = this._createSpeechRecognition(SpeechRecognition);
     this._setupEventListeners();
     this._setupKeyboardControls();
-    
-    log('🎤 Voice navigation initialized - Press S to start, E to stop', 'VOICE');
+
+    log(
+      '🎤 Voice navigation initialized - Press S to start, E to stop',
+      'VOICE'
+    );
     return true;
   }
 
   _createSpeechRecognition(SpeechRecognition) {
     const recognition = new SpeechRecognition();
     const config = CONFIG.VOICE_RECOGNITION;
-    
+
     recognition.lang = config.LANGUAGE;
     recognition.continuous = config.CONTINUOUS;
     recognition.interimResults = config.INTERIM_RESULTS;
     recognition.maxAlternatives = config.MAX_ALTERNATIVES;
-    
+
     return recognition;
   }
 
@@ -48,12 +52,12 @@ class VoiceNavigation {
       log('🛑 Voice recognition stopped', 'VOICE');
     });
 
-    this.speechRecognition.addEventListener('error', (e) => {
+    this.speechRecognition.addEventListener('error', e => {
       this.isCurrentlyListening = false;
       log(`❗ Voice recognition error: ${e.error}`, 'ERROR');
     });
 
-    this.speechRecognition.addEventListener('result', (e) => {
+    this.speechRecognition.addEventListener('result', e => {
       this._handleSpeechResult(e);
     });
   }
@@ -75,18 +79,24 @@ class VoiceNavigation {
   }
 
   _processVoiceCommand(spokenText) {
-    const matchingCommands = VOICE_COMMANDS.filter(cmd => cmd.regex.test(spokenText));
-    
+    const matchingCommands = VOICE_COMMANDS.filter(cmd =>
+      cmd.regex.test(spokenText)
+    );
+
     if (matchingCommands.length === 0) {
-      log('No recognized command. Try: "go forward", "turn left", "look up"', 'VOICE', 'gray');
+      log(
+        'No recognized command. Try: "go forward", "turn left", "look up"',
+        'VOICE',
+        'gray'
+      );
       return;
     }
 
     const multiplier = getMovementMultiplier();
-    
+
     matchingCommands.forEach(command => {
       log(`✅ ${command.label}`, 'VOICE');
-      
+
       if (command.code === 'STOP') {
         this.speechRecognition.stop();
       } else {
@@ -96,7 +106,7 @@ class VoiceNavigation {
   }
 
   _setupKeyboardControls() {
-    document.body.addEventListener('keyup', (e) => {
+    document.body.addEventListener('keyup', e => {
       if (isFormInput(e.target)) return;
 
       const { START_VOICE, STOP_VOICE } = CONFIG.KEYBOARD_CODES;

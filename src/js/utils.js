@@ -5,14 +5,15 @@ import { CONFIG } from './config.js';
  * Check if fast mode is enabled
  * @returns {boolean}
  */
-export const isFastModeEnabled = () => document.getElementById('fast-mode-checkbox')?.checked || false;
+export const isFastModeEnabled = () =>
+  document.getElementById('fast-mode-checkbox')?.checked || false;
 
 /**
  * Check if an element is a form input
  * @param {Element} element
  * @returns {boolean}
  */
-export const isFormInput = (element) => {
+export const isFormInput = element => {
   const tagName = element?.nodeType === 1 ? element.nodeName.toLowerCase() : '';
   return /input|select|textarea/.test(tagName);
 };
@@ -22,7 +23,7 @@ export const isFormInput = (element) => {
  * @param {number} degrees
  * @returns {number}
  */
-export const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
+export const degreesToRadians = degrees => (degrees * Math.PI) / 180;
 
 /**
  * Format coordinates to 5 decimal places
@@ -30,7 +31,8 @@ export const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
  * @param {number} lng
  * @returns {string}
  */
-export const formatCoordinates = (lat, lng) => `(${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+export const formatCoordinates = (lat, lng) =>
+  `(${lat.toFixed(5)}, ${lng.toFixed(5)})`;
 
 /**
  * Get the multiplier for movement based on fast mode and custom multiplier
@@ -50,4 +52,4 @@ export const getMovementMultiplier = (baseMultiplier = 1) => {
 export const buildGeocodingUrl = (address, apiKey) => {
   const encodedAddress = address.replace(/\s+/g, '+');
   return `${CONFIG.API.GEOCODING_BASE_URL}?address=${encodedAddress}&key=${apiKey}`;
-}; 
+};

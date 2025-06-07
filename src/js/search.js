@@ -21,7 +21,7 @@ class SearchController {
   }
 
   _setupEventListeners() {
-    this.searchInput.addEventListener('keyup', (event) => {
+    this.searchInput.addEventListener('keyup', event => {
       if (event.keyCode === CONFIG.KEYBOARD_CODES.ENTER) {
         this._handleSearch(event.target.value.trim());
       }
@@ -32,11 +32,14 @@ class SearchController {
     if (!searchQuery) return;
 
     log(`🔎 Searching for: "${searchQuery}"`, 'SEARCH');
-    
+
     try {
-      const apiUrl = buildGeocodingUrl(searchQuery, import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
+      const apiUrl = buildGeocodingUrl(
+        searchQuery,
+        import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+      );
       const data = await this._fetchGeocodingData(apiUrl);
-      
+
       if (data) {
         this._processGeocodingResult(data);
       }
@@ -47,25 +50,31 @@ class SearchController {
 
   async _fetchGeocodingData(url) {
     const response = await fetch(url);
-    
+
     if (response.status === 429) {
-      log('Geocoding API rate limit exceeded. Please try again later.', 'ERROR');
+      log(
+        'Geocoding API rate limit exceeded. Please try again later.',
+        'ERROR'
+      );
       return null;
     }
-    
+
     if (!response.ok) {
       log(`Geocoding API error: ${response.statusText}`, 'ERROR');
       return null;
     }
-    
+
     return response.json();
   }
 
   _processGeocodingResult(data) {
     if (data.status === 'OK' && data.results.length > 0) {
       const location = data.results[0].geometry.location;
-      log(`✅ Found: ${formatCoordinates(location.lat, location.lng)}`, 'SEARCH');
-      
+      log(
+        `✅ Found: ${formatCoordinates(location.lat, location.lng)}`,
+        'SEARCH'
+      );
+
       if (maps.mapData) {
         maps.setPosition(location.lat, location.lng);
       } else {
