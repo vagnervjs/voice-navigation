@@ -8,7 +8,7 @@ import searchController from './search.js';
 class VoiceNavigationApp {
   constructor() {
     this.loader = new Loader({
-      apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+      apiKey: CONFIG.API.GOOGLE_MAPS.API_KEY,
       version: CONFIG.API.GOOGLE_MAPS.VERSION,
       libraries: [],
     });
@@ -72,8 +72,4 @@ class VoiceNavigationApp {
   }
 }
 
-// Initialize and start the application
-const app = new VoiceNavigationApp();
-app.init().catch(error => {
-  console.error('Fatal error during app initialization:', error);
-});
+export default VoiceNavigationApp;
