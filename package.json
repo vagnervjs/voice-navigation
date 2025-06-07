@@ -1,7 +1,7 @@
 {
   "name": "voice-navigation",
   "version": "1.0.0",
-  "description": "Navigate in Google Maps using voice (or keyboard, ok).",
+  "description": "Voice-powered Street View explorer - navigate Google Maps hands-free with natural commands and modern JavaScript",
   "main": "src/js/main.js",
   "scripts": {
     "dev": "vite",
@@ -17,9 +17,20 @@
     "type": "git",
     "url": "git+https://github.com/vagnervjs/voice-navigation.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "voice-navigation",
+    "google-maps",
+    "street-view",
+    "web-speech-api",
+    "voice-control",
+    "javascript",
+    "es6",
+    "vite",
+    "hands-free",
+    "accessibility"
+  ],
+  "author": "Vagner Santana <vagnervjs@gmail.com> (https://github.com/vagnervjs)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/vagnervjs/voice-navigation/issues"
   },
