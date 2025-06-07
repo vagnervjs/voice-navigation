@@ -3,111 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Navigate in Google Maps using voice (or keyboard, ok). Experiment using voice-elements (Web Component for Web Speech API)">
-
-    <!-- Facebook Metatags -->
-    <meta property="og:title" content="Voice Navigation">
-    <meta property="og:description" content="Navigate in Google Maps using voice (or keyboard, ok). Experiment using voice-elements (Web Component for Web Speech API)">
-    <meta property="og:url" content="http://vagnervjs.github.io/voice-navigation/">
-    <meta property="og:image" content="http://f.cl.ly/items/2G2E031j2P1e3o3g3U0X/Screen%20Shot%202014-06-27%20at%2000.55.18.png">
-
+    <meta name="description" content="Navigate in Google Maps using voice (or keyboard, ok). Experiment using the Web Speech API.">
     <title>Voice Navigation</title>
-
-    <!-- Style -->
     <link rel="stylesheet" href="src/css/main.css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-
-    <!-- Importing Web Component's Polyfill -->
-    <script src="src/bower_components/platform/platform.js"></script>
-
-    <!-- Importing Custom Elements -->
-    <link rel="import" href="src/bower_components/voice-elements/dist/voice-recognition.html">
 </head>
 <body>
-    <div class="loading">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Support Warning -->
-    <div class="brower-support">
-        <p>Sorry, your browser <a href="http://caniuse.com/#feat=web-speech">do not support</a> the Web Speech API :(</p>
-    </div>
-
-    <!-- Voice Element -->
-    <voice-recognition id="recognition-element"></voice-recognition>
-
-    <!-- Maps -->
-    <div id="map" class="card"></div>
-    <div id="street-view"></div>
-
-    <!-- Search -->
-    <input type="text" id="search" placeholder="Search">
-
-    <!-- Help -->
-    <div id="help" class="card">
-        <h2>Instructions</h2>
-        <div>
-            <p>Keyboard ShortCuts</p>
-            <ul>
-                <li>S: Start voice recognation</li>
-                <li>E: End voice recognation</li>
-                <li>↑: Up</li>
-                <li>←: Rotate Left</li>
-                <li>→: Rotate Right</li>
-                <li>↓: Down</li>
-                <li>H: Left</li>
-                <li>J: Right</li>
-                <li>N: Heading Up</li>
-                <li>M: Heading Down</li>
-            </ul>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1 class="project-title">Voice Navigation</h1>
         </div>
-        <div>
-            <p>Voice Commands</p>
-            <ul>
-                <li>GO</li>
-                <li>Back</li>
-                <li>Left</li>
-                <li>Right</li>
-                <li>Rotate</li>
-                <li>UP</li>
-                <li>Down</li>
-            </ul>
+        <input type="text" id="search" placeholder="Search">
+        <div class="fast-mode-toggle">
+          <label for="fast-mode-checkbox" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.98rem;">
+            <input type="checkbox" id="fast-mode-checkbox" style="accent-color: #fff; width: 18px; height: 18px;" />
+            ⚡ Fast mode
+          </label>
         </div>
-
-        <iframe class="gh-btn" id="gh-star" src="http://ghbtns.com/github-btn.html?user=vagnervjs&repo=voice-navigation&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
-        <iframe class="gh-btn" id="gh-fork" src="http://ghbtns.com/github-btn.html?user=vagnervjs&repo=voice-navigation&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
+        <div id="help" class="card compact-help">
+          <div class="help-columns">
+            <div>
+              <p>Shortcuts</p>
+              <ul>
+                <li>🎤 S: Start voice recognition</li>
+                <li>🛑 E: End voice recognition</li>
+                <li>⬆️ ↑: Move up</li>
+                <li>⬇️ ↓: Move down</li>
+                <li>↩️ ←: Rotate left</li>
+                <li>↪️ →: Rotate right</li>
+                <li>⬅️ H: Move left</li>
+                <li>➡️ J: Move right</li>
+                <li>🔼 N: Heading up</li>
+                <li>🔽 M: Heading down</li>
+              </ul>
+            </div>
+            <div>
+              <p>Voice</p>
+              <ul>
+                <li><b>Move forward</b> / <b>Go</b></li>
+                <li><b>Move back</b> / <b>Backward</b></li>
+                <li><b>Turn left</b> / <b>Turn right</b></li>
+                <li><b>Look up</b> / <b>Look down</b></li>
+                <li><b>North</b> / <b>South</b> / <b>East</b> / <b>West</b></li>
+                <li><b>Stop</b> (stops voice recognition)</li>
+                <li><i>Try: "Go forward", "Turn left"</i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="log" class="card">
+          <h3>Log</h3>
+        </div>
+      </aside>
+      <div class="main-content">
+        <div id="map"></div>
+        <div id="street-view"></div>
+      </div>
     </div>
-
-    <!-- Log -->
-    <div id="log" class="card">
-        <h3>Voice Log</h3>
-    </div>
-
-
-    <!-- Google Maps API -->
-    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
-    <!-- App Modules -->
-    <script src="src/js/voice.js"></script>
-    <script src="src/js/maps.js"></script>
-
-    <!-- App Scripts -->
-    <script src="src/js/location.js"></script>
-    <script src="src/js/search.js"></script>
-    <script src="src/js/main.js"></script>
-
-    <!-- Support -->
-    <script src="src/bower_components/voice-elements/demo/support.js"></script>
-
-    <!-- GA -->
-    <script type="text/javascript">
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-32909284-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+    <script type="module" src="src/js/main.js"></script>
 </body>
 </html>

@@ -1,119 +1,196 @@
-/*
- * Voice Navigation
- * Maps Module
- * @author: Vagner Santana;
- * @repository: https://github.com/vagnervjs/voice-navigation;
- */
+import { log } from './log.js';
+import { CONFIG } from './config.js';
+import { isFormInput, degreesToRadians, formatCoordinates } from './utils.js';
 
-var maps = (function() {
-    'use strict';
+class MapsController {
+  constructor() {
+    this.viewDirection = { heading: 0, pitch: 0 };
+    this.googleMapsInstances = null;
+    this.mapData = null;
+  }
 
-    var maps = {
-        init: function(lat, lng){
-            this.pov = {
-                heading: 0,
-                pitch: 0
-            },
-            this.maps = this.initMaps(lat, lng),
-            this.mapData = {
-                lat: lat,
-                lng: lng,
-                pov: this.pov,
-                positionRate: 0.000100,
-                povRate: 5
-            };
+  init(lat, lng) {
+    try {
+      this.viewDirection = { heading: 0, pitch: 0 };
+      this.googleMapsInstances = this._createMapInstances(lat, lng);
+      this.mapData = {
+        lat,
+        lng,
+        pov: this.viewDirection,
+        positionRate: CONFIG.MAPS.POSITION_RATE,
+        povRate: CONFIG.MAPS.POV_RATE,
+      };
+      this._setupKeyboardListeners();
+      log(`🗺️ Maps initialized at ${formatCoordinates(lat, lng)}`, 'MAPS');
+    } catch (error) {
+      log(`❌ Failed to initialize maps: ${error.message}`, 'ERROR');
+      throw error;
+    }
+  }
 
-            this.setupListeners();
-        },
+  _createMapInstances(lat, lng) {
+    const mapContainer = document.querySelector("#map");
+    const streetViewContainer = document.querySelector("#street-view");
+    
+    if (!mapContainer || !streetViewContainer) {
+      throw new Error('Map containers not found');
+    }
 
-        initMaps: function(lat, lng) {
-            var _self = this,
-                mapContainer = document.querySelector('#map'),
-                streetViewContainer = document.querySelector('#street-view'),
+    const position = new google.maps.LatLng(lat, lng);
+    
+    const map = new google.maps.Map(mapContainer, {
+      zoom: CONFIG.MAPS.DEFAULT_ZOOM,
+      center: position,
+    });
+    
+    const streetView = new google.maps.StreetViewPanorama(streetViewContainer, {
+      position,
+      pov: this.viewDirection,
+    });
 
-                position = new google.maps.LatLng(lat, lng),
-                mapOptions = {
-                    zoom: 100,
-                    center: position
-                },
-                streetViewOptions = {
-                    position: position,
-                    pov: _self.pov
-                },
+    return { map, streetView };
+  }
 
-                map = new google.maps.Map(mapContainer, mapOptions),
-                streetView = new google.maps.StreetViewPanorama(streetViewContainer, streetViewOptions),
-                maps = {
-                    map: map,
-                    streetView: streetView
-                };
+  updatePosition() {
+    if (!this.googleMapsInstances || !this.mapData) return;
+    
+    const newPosition = new google.maps.LatLng(
+      this.mapData.lat,
+      this.mapData.lng
+    );
+    
+    this.googleMapsInstances.map.panTo(newPosition);
+    this.googleMapsInstances.streetView.setPosition(newPosition);
+  }
 
-            return maps;
-        },
+  updateViewDirection() {
+    if (!this.googleMapsInstances) return;
+    
+    const currentPov = this.googleMapsInstances.streetView.getPov();
+    currentPov.heading = this.viewDirection.heading;
+    currentPov.pitch = this.viewDirection.pitch;
+    this.googleMapsInstances.streetView.setPov(currentPov);
+  }
 
-        updatePosition: function() {
-            var _self = this,
-                newMapPosition = new google.maps.LatLng(_self.mapData.lat, _self.mapData.lng);
+  executeVoiceCommand(command, multiplier = 1) {
+    if (!this.mapData) return;
+    
+    const moveDistance = this.mapData.positionRate * multiplier;
+    const turnAngle = this.mapData.povRate * multiplier;
 
-            _self.maps.map.panTo(newMapPosition);
-            _self.maps.streetView.setPosition(newMapPosition);
-        },
+    switch (command) {
+      case 'MOVE_FORWARD':
+        this._moveInDirection(this.viewDirection.heading, moveDistance);
+        break;
+      case 'MOVE_BACKWARD':
+        this._moveInDirection(this.viewDirection.heading + 180, moveDistance);
+        break;
+      case 'MOVE_LEFT':
+        this._moveInDirection(this.viewDirection.heading - 90, moveDistance);
+        break;
+      case 'MOVE_RIGHT':
+        this._moveInDirection(this.viewDirection.heading + 90, moveDistance);
+        break;
+      case 'TURN_LEFT':
+        this._adjustHeading(-turnAngle);
+        break;
+      case 'TURN_RIGHT':
+        this._adjustHeading(turnAngle);
+        break;
+      case 'LOOK_UP':
+        this._adjustPitch(turnAngle);
+        break;
+      case 'LOOK_DOWN':
+        this._adjustPitch(-turnAngle);
+        break;
+      case 'GO_NORTH':
+        this.mapData.lat += moveDistance;
+        break;
+      case 'GO_SOUTH':
+        this.mapData.lat -= moveDistance;
+        break;
+      case 'GO_EAST':
+        this.mapData.lng += moveDistance;
+        break;
+      case 'GO_WEST':
+        this.mapData.lng -= moveDistance;
+        break;
+    }
+    
+    this.updatePosition();
+    this.updateViewDirection();
+  }
 
-        updatePov: function() {
-            var _self = this,
-                newStreetViewPov = _self.maps.streetView.getPov();
+  _moveInDirection(heading, distance) {
+    const headingRad = degreesToRadians(heading);
+    this.mapData.lat += Math.cos(headingRad) * distance;
+    this.mapData.lng += Math.sin(headingRad) * distance;
+  }
 
-            newStreetViewPov.heading = _self.pov.heading;
-            newStreetViewPov.pitch = _self.pov.pitch;
-            _self.maps.streetView.setPov(newStreetViewPov);
-        },
+  _adjustHeading(angle) {
+    this.viewDirection.heading += angle;
+    this.mapData.pov.heading = this.viewDirection.heading;
+  }
 
-        setPositionByCommand: function(cmd) {
-            var _self = this;
-            switch(cmd) {
-                case 40: // FORWARD
-                    _self.mapData.lat -= _self.mapData.positionRate;
-                    break;
-                case 38: // BACKWARD
-                    _self.mapData.lat += _self.mapData.positionRate;
-                    break;
-                case 72: // LEFT (H)
-                    _self.mapData.lng -= _self.mapData.positionRate;
-                    break;
-                case 74: // RIGHT (J)
-                    _self.mapData.lng += _self.mapData.positionRate;
-                    break;
-                case 37: // Heading++ (<)
-                    _self.mapData.pov.heading += _self.mapData.povRate;
-                    break;
-                case 39: // Heading-- (>)
-                    _self.mapData.pov.heading -= _self.mapData.povRate;
-                    break;
-                case 78: // Pitch++ (N)
-                    _self.mapData.pov.pitch += _self.mapData.povRate;
-                    break;
-                case 77: // Pitch-- (M)
-                    _self.mapData.pov.pitch -= _self.mapData.povRate;
-                    break;
-            }
+  _adjustPitch(angle) {
+    this.viewDirection.pitch = Math.max(-90, Math.min(90, this.viewDirection.pitch + angle));
+    this.mapData.pov.pitch = this.viewDirection.pitch;
+  }
 
-            _self.updatePosition();
-            _self.updatePov();
-        },
+  handleKeyboardInput(keyCode, multiplier = 1) {
+    if (!this.mapData) return;
+    
+    const { ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, H, J, N, M } = CONFIG.KEYBOARD_CODES;
+    const positionRate = this.mapData.positionRate * multiplier;
+    const povRate = this.mapData.povRate * multiplier;
 
-        setupListeners: function() {
-            var _self = this;
-            document.body.addEventListener('keydown', function(e) {
-                e = e || window.event;
-                var target = e.target || e.srcElement,
-                    targetTagName = (target.nodeType === 1) ? target.nodeName.toLowerCase() : '';
-                if ( !/input|select|textarea/.test(targetTagName) ) {
-                    _self.setPositionByCommand(e.keyCode);
-                }
-            });
-        },
-    };
+    switch (keyCode) {
+      case ARROW_DOWN: // FORWARD
+        this.mapData.lat -= positionRate;
+        break;
+      case ARROW_UP: // BACKWARD
+        this.mapData.lat += positionRate;
+        break;
+      case H: // LEFT
+        this.mapData.lng -= positionRate;
+        break;
+      case J: // RIGHT
+        this.mapData.lng += positionRate;
+        break;
+      case ARROW_LEFT: // Heading++
+        this.mapData.pov.heading += povRate;
+        break;
+      case ARROW_RIGHT: // Heading--
+        this.mapData.pov.heading -= povRate;
+        break;
+      case N: // Pitch++
+        this.mapData.pov.pitch += povRate;
+        break;
+      case M: // Pitch--
+        this.mapData.pov.pitch -= povRate;
+        break;
+    }
+    
+    this.updatePosition();
+    this.updateViewDirection();
+  }
 
-    return maps;
+  _setupKeyboardListeners() {
+    document.body.addEventListener("keydown", (e) => {
+      if (isFormInput(e.target)) return;
+      this.handleKeyboardInput(e.keyCode);
+    });
+  }
 
-}());
+  setPosition(lat, lng) {
+    if (this.mapData) {
+      this.mapData.lat = lat;
+      this.mapData.lng = lng;
+      this.updatePosition();
+    }
+  }
+}
+
+// Export singleton instance
+const maps = new MapsController();
+export default maps;
