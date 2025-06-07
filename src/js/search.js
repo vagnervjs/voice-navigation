@@ -29,6 +29,7 @@ class SearchController {
   }
 
   async _handleSearch(searchQuery) {
+    searchQuery = searchQuery.trim();
     if (!searchQuery) return;
 
     log(`🔎 Searching for: "${searchQuery}"`, 'SEARCH');
@@ -36,7 +37,7 @@ class SearchController {
     try {
       const apiUrl = buildGeocodingUrl(
         searchQuery,
-        import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+        CONFIG.API.GOOGLE_MAPS.API_KEY
       );
       const data = await this._fetchGeocodingData(apiUrl);
 

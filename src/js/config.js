@@ -41,6 +41,7 @@ export const CONFIG = {
       import.meta.env.VITE_GEOCODING_BASE_URL ||
       'https://maps.googleapis.com/maps/api/geocode/json',
     GOOGLE_MAPS: {
+      API_KEY: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
       VERSION: import.meta.env.VITE_GOOGLE_MAPS_VERSION || 'weekly',
       LIBRARIES: ['maps', 'streetView'],
     },

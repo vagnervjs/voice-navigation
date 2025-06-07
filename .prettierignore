@@ -23,7 +23,5 @@ README.md
 *.min.css
 
 # Test files and coverage
-test/
 coverage/
-*.test.js
 *.spec.js 

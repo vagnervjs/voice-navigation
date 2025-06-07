@@ -28,6 +28,6 @@ export default defineConfig({
     },
     
     // Setup files
-    setupFiles: ['./test/setup.js'],
+    setupFiles: ['./test/env-setup.js', './test/setup.js'],
   },
 }); 
