@@ -1,6 +1,6 @@
 #help.compact-help {
   margin-bottom: 8px;
-  background: #232329;
+  background: var(--color-bg-secondary);
   border-radius: 6px;
   padding: 10px;
   box-shadow: none;
@@ -17,7 +17,7 @@
 .help-section p {
   font-weight: 600;
   margin-bottom: 4px;
-  color: #fff;
+  color: var(--color-text-strong);
   font-size: 0.9rem;
   margin-top: 0;
   line-height: 1.2;
@@ -27,7 +27,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 2px 8px;
   margin: 0;
-  color: #e4e4e7;
+  color: var(--color-text-light);
   font-size: 0.82rem;
   line-height: 1.2;
 }
@@ -41,14 +41,14 @@
 #help p {
   font-weight: 600;
   margin-bottom: 4px;
-  color: #fff;
+  color: var(--color-text-strong);
   font-size: 0.9rem;
   margin-top: 0;
   line-height: 1.2;
 }
 #help ul {
   margin-bottom: 4px;
-  color: #e4e4e7;
+  color: var(--color-text-light);
   font-size: 0.85rem;
   margin-top: 0;
   line-height: 1.3;

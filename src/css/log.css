@@ -1,13 +1,13 @@
 #log {
-  background: #232329;
+  background: var(--color-bg-secondary);
   border-radius: 8px;
   min-height: 80px;
   margin-top: 4px;
   box-shadow: none;
-  color: #f4f4f5;
-  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'monospace';
+  color: var(--color-text-main);
+  font-family: var(--font-mono);
   font-size: 0.97rem;
-  border: 1px solid #232329;
+  border: 1px solid var(--color-border);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -15,9 +15,9 @@
 }
 
 .log-header {
-  background: #232329;
+  background: var(--color-bg-secondary);
   padding: 12px 14px 12px 14px;
-  border-bottom: 1px solid #3f3f46;
+  border-bottom: 1px solid var(--color-border-light);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   margin: 0;
-  color: #f4f4f5;
+  color: var(--color-text-main);
 }
 
 .log-filters {
@@ -43,9 +43,9 @@
 }
 
 .filter-btn {
-  background: #232329;
-  border: 1px solid #3f3f46;
-  color: #a1a1aa;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text-muted);
   font-size: 0.75rem;
   padding: 3px 6px;
   border-radius: 4px;
@@ -55,14 +55,14 @@
 }
 
 .filter-btn:hover {
-  background: #3f3f46;
-  border-color: #52525b;
+  background: var(--color-border-light);
+  border-color: var(--color-border-lighter);
 }
 
 .filter-btn.active {
-  background: #3f3f46;
-  color: #f4f4f5;
-  border-color: #52525b;
+  background: var(--color-border-light);
+  color: var(--color-text-main);
+  border-color: var(--color-border-lighter);
 }
 
 .filter-btn[data-filter='ALL'] {
@@ -80,7 +80,7 @@
   font-family: inherit;
   font-size: 0.92rem;
   margin: 0 0 3px 0;
-  color: #e4e4e7;
+  color: var(--color-text-light);
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.3;
