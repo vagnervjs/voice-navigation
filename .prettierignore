@@ -20,4 +20,10 @@ README.md
 
 # Minified files
 *.min.js
-*.min.css 
+*.min.css
+
+# Test files and coverage
+test/
+coverage/
+*.test.js
+*.spec.js 
