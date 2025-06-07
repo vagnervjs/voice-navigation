@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.vite/
+
+# Build outputs
+dist/
+build/
+
+# Environment and config files
+.env
+.env.*
+package-lock.json
+
+# Git
+.git/
+
+# Documentation
+*.md
+README.md
+
+# Minified files
+*.min.js
+*.min.css
+
+# Test files and coverage
+coverage/
+*.spec.js 
