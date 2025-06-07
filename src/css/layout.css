@@ -1,0 +1,14 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #18181b;
+}
+
+.main-content {
+  width: 75vw;
+  height: 100vh;
+  position: relative;
+  background: #09090b;
+  overflow: hidden;
+} 

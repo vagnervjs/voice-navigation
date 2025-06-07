@@ -1,0 +1,87 @@
+#log {
+  background: #232329;
+  border-radius: 8px;
+  min-height: 80px;
+  margin-top: 4px;
+  box-shadow: none;
+  color: #f4f4f5;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'monospace';
+  font-size: 0.97rem;
+  border: 1px solid #232329;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.log-header {
+  background: #232329;
+  padding: 12px 14px 12px 14px;
+  border-bottom: 1px solid #3f3f46;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#log h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: #f4f4f5;
+}
+
+.log-filters {
+  margin: 0;
+  padding: 0;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: #232329;
+  border: 1px solid #3f3f46;
+  color: #a1a1aa;
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: #3f3f46;
+  border-color: #52525b;
+}
+
+.filter-btn.active {
+  background: #3f3f46;
+  color: #f4f4f5;
+  border-color: #52525b;
+}
+
+.filter-btn[data-filter='ALL'] {
+  font-weight: 600;
+  min-width: 28px;
+}
+
+.log-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px 14px 14px;
+}
+
+#log p {
+  font-family: inherit;
+  font-size: 0.92rem;
+  margin: 0 0 3px 0;
+  color: #e4e4e7;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+} 
