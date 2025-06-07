@@ -1,0 +1,54 @@
+{
+  "name": "voice-navigation",
+  "version": "1.0.0",
+  "description": "Voice-powered Street View explorer - navigate Google Maps hands-free with natural commands and modern JavaScript",
+  "main": "src/js/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write \"src/**/*.{js,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{js,css,html}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vagnervjs/voice-navigation.git"
+  },
+  "keywords": [
+    "voice-navigation",
+    "google-maps",
+    "street-view",
+    "web-speech-api",
+    "voice-control",
+    "javascript",
+    "es6",
+    "vite",
+    "hands-free",
+    "accessibility"
+  ],
+  "author": "Vagner Santana <vagnervjs@gmail.com> (https://github.com/vagnervjs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vagnervjs/voice-navigation/issues"
+  },
+  "homepage": "https://vagnervjs.github.io/voice-navigation",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/ui": "^2.1.8",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.5.3",
+    "vite": "^6.3.5",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.8"
+  }
+}
